@@ -172,8 +172,7 @@ class Completer( with_metaclass( abc.ABCMeta, object ) ):
     self.prepared_triggers = (
         completer_utils.PreparedTriggers(
             user_trigger_map = user_options[ 'semantic_triggers' ],
-            filetype_set = set( self.SupportedFiletypes() ) )
-        if user_options[ 'auto_trigger' ] else None )
+            filetype_set = set( self.SupportedFiletypes() ) ) )
     self._completions_cache = CompletionsCache()
     self._max_candidates = user_options[ 'max_num_candidates' ]
 

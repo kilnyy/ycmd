@@ -93,6 +93,11 @@ public:
            normal_ == other.normal_;
   };
 
+  // Compare character directly
+  inline bool MatchesStrict( const Character &other ) const {
+    return normal_ == other.normal_;
+  };
+
 private:
   std::string normal_;
   std::string base_;

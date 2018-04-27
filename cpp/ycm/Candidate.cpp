@@ -113,6 +113,11 @@ Result Candidate::QueryMatchResult( const Word &query ) const {
     const auto &query_character = *query_character_pos;
 
     if ( query_character->MatchesSmart( *candidate_character ) ) {
+      // Don't allow smart case matching if it's not a prefix match
+      if ( candidate_index != query_index &&
+           !query_character->MatchesStrict( *candidate_character ) ) {
+          continue;
+      }
       index_sum += candidate_index;
 
       ++query_character_pos;

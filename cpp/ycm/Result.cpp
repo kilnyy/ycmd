@@ -87,11 +87,11 @@ bool Result::operator< ( const Result &other ) const {
     // another if one of these conditions is satisfied, in that order:
     //  - it starts with the same character as the query while the other does
     //    not;
+    //  - the query is a prefix of the result but not a prefix of the other;
     //  - one of the results has all its word boundary characters matched and
     //    it has more word boundary characters matched than the other;
     //  - both results have all their word boundary characters matched and it
     //    has less word boundary characters than the other;
-    //  - the query is a prefix of the result but not a prefix of the other;
     //  - it has more word boundary characters matched than the other;
     //  - it has less word boundary characters than the other;
     //  - its sum of indexes of its matched characters is less than the sum of
@@ -106,6 +106,10 @@ bool Result::operator< ( const Result &other ) const {
       return first_char_same_in_query_and_text_;
     }
 
+    if ( query_is_candidate_prefix_ != other.query_is_candidate_prefix_ ) {
+      return query_is_candidate_prefix_;
+    }
+
     if ( num_wb_matches_ == query_->Length() ||
          other.num_wb_matches_ == query_->Length() ) {
       if ( num_wb_matches_ != other.num_wb_matches_ ) {
@@ -115,10 +119,6 @@ bool Result::operator< ( const Result &other ) const {
       if ( NumWordBoundaryChars() != other.NumWordBoundaryChars() ) {
         return NumWordBoundaryChars() < other.NumWordBoundaryChars();
       }
-    }
-
-    if ( query_is_candidate_prefix_ != other.query_is_candidate_prefix_ ) {
-      return query_is_candidate_prefix_;
     }
 
     if ( num_wb_matches_ != other.num_wb_matches_ ) {
